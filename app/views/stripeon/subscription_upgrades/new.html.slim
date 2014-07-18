@@ -1,0 +1,31 @@
+div
+  h2 Upgrade to #{@new_plan.name} plan
+  div
+    p
+      ' Your monthly bill will increase from
+      b
+        ' #{number_to_currency @current_plan.price_in_dollars, precision: 0}
+      ' to
+      b
+        ' #{number_to_currency @new_plan.price_in_dollars, precision: 0}
+      ' on
+      b = @subscription.current_period_end_at.strftime("%B %d, %Y")
+
+    p
+      ' Your plan will be upgraded from
+      b
+        ' #{@current_plan.name}
+      ' to
+      b
+        | #{@new_plan.name}
+
+    p Plan changes are immediate
+    p
+      ' Your credit card will be charged for
+      b
+        ' #{number_to_currency @estimated_upgrade_cost, precision: 2}
+      | immediately
+
+    = form_for @subscription do |f|
+      = f.hidden_field :new_plan_id, value: @new_plan.id
+      = f.button "Change my plan"

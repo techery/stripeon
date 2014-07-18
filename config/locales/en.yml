@@ -1,0 +1,74 @@
+#TODO: Move all to namespace 'stripeon'
+en:
+  messages:
+    credit_card:
+      has_been_updated: "Your credit card information has been updated"
+    subscription:
+      created: "Thank you for your subscription!"
+      canceled: "Your subscription has been successfully canceled"
+      upgraded: "Your subscription has been successfuly upgraded to plan %{plan}"
+
+  subscription:
+    cancel: "Cancel Subscription"
+
+  credit_card:
+    new: 'Update Billing Info'
+
+  plan:
+    current: "Your Plan"
+    plan: "Plan"
+    price: "Price"
+    buy_now_for: "Buy now for %{price}"
+    expires_on: "Your subscription expires on"
+    help_text: >
+      Choose a plan.
+
+  errors:
+    access_denied: "You are not authorized to perform this action."
+    subscription:
+      failed_to_cancel: "Failed to cancel subscription. Please try later"
+      already_canceled: "Your subscription is already canceled"
+      renewable_required: "You should have active recurring subscription to perform this action"
+      is_not_upgradeable: >
+        We are sorry but your current subscription is not upgradeable.
+        Please contact us if you have any questions
+      is_not_upgradeable_to_plan: >
+        We are sorry but your current subscription can not be upgraded to requested plan "%{plan}".
+        Please contact us if you have any questions"
+      failed_to_update: 'Failed to update subscription: "%{reason}"'
+    credit_card:
+      failed_to_update: "Failed to update credit card information. Please try later."
+    already_subscribed: 'You already have an active subscription'
+    no_active_subscription: "You don't have an active subscription"
+    models:
+      plan:
+        stripe:
+          create: 'Failed to create plan on Stripe: "%{reason}"'
+          update: 'Failed to update plan on Stripe: "%{reason}"'
+  stripeon:
+    subscription_mailer:
+      create_subscription_mail:
+        subject: "Stripeon: Subscription Confirmation"
+      upgrade_subscription_mail:
+        subject: "Stripeon: Subscription Upgraded"
+      expire_subscription_mail:
+        subject: "Stripeon: Subscription Expired"
+
+  page_titles:
+    stripeon:
+      registrations: "Join Now"
+      sessions: "Sign in"
+      passwords: "Forgot your password?"
+      billing_settings: "Plans and Billing"
+      credit_cards: "Update billing information"
+      passwords: "Update your Password"
+      payments: "Payment History"
+      profiles: "Your Profile"
+      cancel_subscription: "Cancel your %{plan} subscription"
+      subscribe_to_plan: "Subscribe to %{plan} plan"
+      upgrade_to_plan: "Upgrade to %{plan} plan"
+
+  activerecord:
+    errors:
+      plan_not_found: >
+        The plan you requested was not found. Probably it is no longer active.

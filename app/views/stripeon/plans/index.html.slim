@@ -1,0 +1,4 @@
+div
+  h1 Available plans
+  p.plans-help-text = I18n.t('plan.help_text')
+= render partial: "stripeon/plans/list", locals: { plans: @plans }

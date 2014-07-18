@@ -1,0 +1,19 @@
+#stripe-errors
+div
+  label for="card-number" Credit card number
+  input#card-number type="text" data-stripe="number" maxlength="16"
+div.credit-card
+  div
+    label Expiration (MM/YY)
+    select#expiry-month data-stripe="exp-month"
+      option Month
+      - ('01'..'12').each do |month|
+        option = month
+    '  /
+    select#expiry-year data-stripe="exp-year"
+      option Year
+      - (2014..2023).each do |year|
+        option = year
+  .security-code
+    label for="cvc-code" Security Code
+    input.right#cvc-code type="text" data-stripe="cvc" size="4" maxlength="4"

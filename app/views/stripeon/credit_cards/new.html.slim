@@ -1,0 +1,4 @@
+div
+  = form_for @credit_card, data: { 'stripe-form' => 'credit_card' } do |f|
+    = render partial: 'form_fields'
+    = f.button "Update Credit Card", class: "wide"

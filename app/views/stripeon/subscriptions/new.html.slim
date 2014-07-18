@@ -1,0 +1,7 @@
+.order
+  h2 Your order
+  .clearfix
+    div
+      h4 = "Total: #{number_to_currency @subscription.plan.price_in_dollars, precision: 0}"
+    div
+      = render 'payment_form', subscription: @subscription

@@ -1,0 +1,9 @@
+Congratulations!
+Here's a summary of your upgraded plan.
+
+
+Description: <%= @subscription.plan.name %>
+Upgrade cost: <%= number_to_currency @upgrade_cost_in_dollars %>
+Plan price: <%= @subscription.plan.decorate.price_in_dollars %>
+Amount: <%= number_to_currency (@upgrade_cost_in_dollars + @subscription.plan.decorate.price_in_dollars) %>
+

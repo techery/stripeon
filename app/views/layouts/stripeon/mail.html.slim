@@ -1,0 +1,16 @@
+- text_color_style = "color: #dfdfdf;"
+- header_footer_stype = "#{text_color_style} background-color: #0075aa; border-bottom: solid 1px #dfdfdf; text-align: left; height: 50px; padding-bottom: 5px; padding-top: 5px; padding-left: 10px;"
+
+doctype
+html xmlns="http://www.w3.org/1999/xhtml"
+  head
+    title Stripeon
+    meta content="width=(device-width,)initial-scale=1.0" name="viewport"
+  body style="padding: 0; margin: 0; font-family: sans-serif;"
+    table.main style="background: #fafafa; color: #222222; font-size: 100%; width: 100%; height: 100%;"
+      tr
+        td.header style="#{header_footer_stype}"
+          h1 style="display: inline-block; margin: 0; vertical-align: middle; font-weight: 300;" Stripeon
+      tr
+        td.content style="background-color: #fafafa; padding: 10px; font-size: 11pt;"
+          == yield
