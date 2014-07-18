@@ -1,0 +1,3 @@
+= Stripeon
+
+Flexible subscription solution for Rails with Stripe
