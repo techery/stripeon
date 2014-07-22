@@ -1,0 +1,6 @@
+Congratulations!
+You just purchased a subscription. Here's a summary of your plan.
+
+Description: <%= @subscription.plan.name %>
+Amount: <%= number_to_currency @subscription.plan.decorate.price_in_dollars %>
+

@@ -6,3 +6,11 @@ en:
         stripe:
           create: 'Failed to create plan on Stripe: "%{reason}"'
           update: 'Failed to update plan on Stripe: "%{reason}"'
+  stripeon:
+    subscription_mailer:
+      create_subscription_mail:
+        subject: "Stripeon: Subscription Confirmation"
+      upgrade_subscription_mail:
+        subject: "Stripeon: Subscription Upgraded"
+      expire_subscription_mail:
+        subject: "Stripeon: Subscription Expired"

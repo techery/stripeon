@@ -12,3 +12,5 @@ gem 'dci', github: 'techery/dci'
 # Development dependencies
 gem 'pry'
 gem 'pry-debugger'
+
+gem 'slim'

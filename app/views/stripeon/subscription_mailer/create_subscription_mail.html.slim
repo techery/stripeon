@@ -1,0 +1,11 @@
+h2 Congratulations!
+p You just purchased a subscription. Here's a summary of your plan.
+
+
+table
+  tr
+    th align="right" style="padding-right: 5px;" Description:
+    td = @subscription.plan.name
+  tr
+    th align="right" style="padding-right: 5px;" Amount:
+    td = number_to_currency @subscription.plan.decorate.price_in_dollars
