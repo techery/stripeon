@@ -11,6 +11,18 @@ en:
   subscription:
     cancel: "Cancel Subscription"
 
+  credit_card:
+    new: 'Update Billing Info'
+
+  plan:
+    current: "Your Plan"
+    plan: "Plan"
+    price: "Price"
+    buy_now_for: "Buy now for %{price}"
+    expires_on: "Your subscription expires on"
+    help_text: >
+      Choose a plan.
+
   errors:
     access_denied: "You are not authorized to perform this action."
     subscription:
@@ -55,3 +67,8 @@ en:
       cancel_subscription: "Cancel your %{plan} subscription"
       subscribe_to_plan: "Subscribe to %{plan} plan"
       upgrade_to_plan: "Upgrade to %{plan} plan"
+
+  activerecord:
+    errors:
+      plan_not_found: >
+        The plan you requested was not found. Probably it is no longer active.

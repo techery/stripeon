@@ -15,7 +15,7 @@ feature 'Preview order', %{
     end
 
     scenario "Previewing order" do
-      visit root_url
+      visit stripeon.plans_url
       pricing_table = page.all('ul.pricing-table').last
       click_link pricing_table.find('a', text: "Buy now").text
       order_section = page.find('.order')
@@ -26,20 +26,20 @@ feature 'Preview order', %{
     end
 
     scenario "Previewing order with not active plan" do
-      visit new_subscription_path(plan_id: 100500)
+      visit stripeon.new_subscription_path(plan_id: 100500)
 
       expect(page).to have_content I18n.t('activerecord.errors.plan_not_found')
       expect(page).not_to have_selector('.order')
-      expect(current_path).to eql plans_path
+      expect(current_path).to eql stripeon.plans_path
     end
   end
 
   context "When have active subscription" do
     scenario "Redirecting to billing settings page with error" do
       login_as user_with_active_subscription, scope: :user
-      visit new_subscription_path(plan_id: plan.id)
+      visit stripeon.new_subscription_path(plan_id: plan.id)
 
-      expect(current_path).to eql billing_settings_path
+      expect(current_path).to eql stripeon.billing_settings_path
       expect(page).to have_content I18n.t('errors.already_subscribed')
     end
   end

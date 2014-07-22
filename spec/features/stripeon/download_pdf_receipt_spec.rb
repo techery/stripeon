@@ -10,7 +10,7 @@ feature "Transaction receipt", %{
 
   background do
     login_as user, scope: :user
-    visit payments_path
+    visit stripeon.payments_path
     @payments_table = page.find('table.payments')
   end
 
@@ -21,7 +21,7 @@ feature "Transaction receipt", %{
         transaction_ids.each do |id|
           expect(
             @payments_table
-          ).to have_link "Download Receipt", href: payment_path(id, format: :pdf)
+          ).to have_link "Download Receipt", href: stripeon.payment_path(id, format: :pdf)
         end
       end
     end
@@ -32,7 +32,7 @@ feature "Transaction receipt", %{
         transaction_ids.each do |id|
           expect(
             @payments_table
-          ).not_to have_link "Download Receipt", href: payment_path(id, format: :pdf)
+          ).not_to have_link "Download Receipt", href: stripeon.payment_path(id, format: :pdf)
         end
       end
     end
@@ -42,7 +42,7 @@ feature "Transaction receipt", %{
     context "Myself receipt" do
       context "Transaction is successful" do
         scenario "It downloads" do
-          visit payment_path(user.transactions.where(successful: true).last.id, format: :pdf)
+          visit stripeon.payment_path(user.transactions.where(successful: true).last.id, format: :pdf)
           expect(page.status_code).to eql 200
           expect(page.response_headers['Content-Type']).to eql "application/pdf"
         end
@@ -50,7 +50,7 @@ feature "Transaction receipt", %{
 
       context "Transaction failed" do
         scenario "It return fobidden error" do
-          visit payment_path(user.transactions.where(successful: false).last.id, format: :pdf)
+          visit stripeon.payment_path(user.transactions.where(successful: false).last.id, format: :pdf)
           expect(page.status_code).to eql 403
           expect(page.response_headers['Content-Type']).not_to eql "application/pdf"
         end
@@ -60,7 +60,7 @@ feature "Transaction receipt", %{
     context "Other user receipt" do
       context "Transaction is successful" do
         scenario "It return fobidden error" do
-          visit payment_path(other_user.transactions.where(successful: true).last.id, format: :pdf)
+          visit stripeon.payment_path(other_user.transactions.where(successful: true).last.id, format: :pdf)
           expect(page.status_code).to eql 403
           expect(page.response_headers['Content-Type']).not_to eql "application/pdf"
         end
@@ -68,7 +68,7 @@ feature "Transaction receipt", %{
 
       context "Transaction failed" do
         scenario "It return fobidden error" do
-          visit payment_path(other_user.transactions.where(successful: false).last.id, format: :pdf)
+          visit stripeon.payment_path(other_user.transactions.where(successful: false).last.id, format: :pdf)
           expect(page.status_code).to eql 403
           expect(page.response_headers['Content-Type']).not_to eql "application/pdf"
         end

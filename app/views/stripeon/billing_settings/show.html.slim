@@ -19,7 +19,7 @@ div
             ' Expiration:
             b = "#{@credit_card.exp_month}/#{@credit_card.exp_year}"
           - if @subscription.active?
-            = link_to t('credit_card.new'), new_credit_card_path, class: "button small right"
+            = link_to t('credit_card.new'), stripeon.new_credit_card_path, class: "button small right"
 
   div
     h2 Available plans
@@ -40,4 +40,4 @@ div
               - elsif @subscription.can_upgrade? && @current_plan.upgradable_to?(plan)
                 = link_to 'Upgrade', upgrade_subscription_path(plan_id: plan.id), class: "button small"
     - if @subscription.active?
-      = link_to t('subscription.cancel'), cancel_subscription_path, class: "button small"
+      = link_to t('subscription.cancel'), stripeon.cancel_subscription_path, class: "button small"

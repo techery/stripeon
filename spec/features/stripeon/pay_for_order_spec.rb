@@ -7,11 +7,11 @@ feature 'Pay for order', %{
 
   given(:user) { create :user }
 
-  given!(:plan) { Fcreate :stripeon_plan, :with_stripe_call, price: 2500 }
+  given!(:plan) { create :stripeon_plan, :with_stripe_call, price: 2500 }
 
   background do
     login_as user, scope: :user, run_callbacks: false
-    visit new_subscription_path(plan_id: plan.id)
+    visit stripeon.new_subscription_path(plan_id: plan.id)
   end
 
   context "With valid credit card" do
@@ -23,10 +23,10 @@ feature 'Pay for order', %{
         expect {
           pay_now_with_card
           expect(page).to have_notice "Thank you for your subscription!"
-        }.to change(Sidekiq::Extensions::DelayedMailer.jobs, :size).by(1)
+        }.to change(ActionMailer::Base.deliveries, :count).by(1)
 
-        expect(Sidekiq::Extensions::DelayedMailer.jobs.last["args"][0]).to include "UserMailer"
-        expect(Sidekiq::Extensions::DelayedMailer.jobs.last["args"][0]).to include "create_subscription_mail"
+        expect(ActionMailer::Base.deliveries.last).to eql 'Stripeon: Subscription Confirmation'
+
       end
     end
 
@@ -52,7 +52,7 @@ feature 'Pay for order', %{
       } do
         scenario "Seeing purchase confirmation" do
           expect(page).to have_notice "Thank you for your subscription!"
-          expect(current_path).to eql billing_settings_path
+          expect(current_path).to eql stripeon.billing_settings_path
         end
       end
     end

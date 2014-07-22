@@ -23,7 +23,7 @@ feature "See plans table on billing setting page", %{
   background do
     login_as user, scope: :user
 
-    visit billing_settings_path
+    visit stripeon.billing_settings_path
   end
 
   describe "Correct page title" do
@@ -80,7 +80,7 @@ feature "See plans table on billing setting page", %{
       rows.each do |row|
         columns = row.all('td')
         if columns[0].has_content? "Extreme" # Can upgrade only to Extreme
-          expect(columns[2]).to have_link 'Upgrade', upgrade_subscription_path
+          expect(columns[2]).to have_link 'Upgrade', stripeon.upgrade_subscription_path
         else
           expect(columns[2]).not_to have_link 'Upgrade'
         end

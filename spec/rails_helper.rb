@@ -5,6 +5,7 @@ require File.expand_path('../dummy/config/environment', __FILE__)
 require 'rspec/rails'
 require 'capybara/rails'
 require 'capybara/rspec'
+require 'capybara/webkit'
 require 'capybara-screenshot/rspec'
 require 'shoulda/matchers'
 require 'factory_girl_rails'
@@ -14,6 +15,9 @@ require 'database_cleaner'
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
 ActiveRecord::Migration.maintain_test_schema!
+
+Capybara.javascript_driver = :webkit
+Capybara.default_wait_time = 10
 
 RSpec.configure do |config|
   config.use_transactional_fixtures = true

@@ -15,7 +15,7 @@ module Stripeon
         end
       end
 
-    rescue
+    rescue => e
       render text: 'Forbidden', status: :forbidden and return
     end
   end

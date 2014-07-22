@@ -8,7 +8,7 @@ module Stripeon
       @current_plan = @subscription.plan.decorate
       @new_plan = @plan
 
-      content_for :page_title, I18n.t('page_titles.upgrade_to_plan', plan: @new_plan.name)
+      content_for :page_title, I18n.t('page_titles.stripeon.upgrade_to_plan', plan: @new_plan.name)
 
       unless @current_plan.upgradable_to? @new_plan
         flash[:error] = I18n.t 'errors.subscription.is_not_upgradeable_to_plan', plan: @new_plan.name

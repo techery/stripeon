@@ -13,7 +13,7 @@ feature "View current subscription details", %{
     create(:stripeon_subscription, current_period_end_at: Date.yesterday).customer
   }
 
-  context "Any type of user", js: true do
+  context "Any type of user" do
     # TODO: check validness of test for user_without_subscription
 
     [
@@ -26,7 +26,7 @@ feature "View current subscription details", %{
       background { login_as user, scope: :user }
 
       scenario "Viewing current subscription plan details by #{user_type.to_s.humanize.downcase}" do
-        visit root_path
+        visit stripeon.billing_settings_path
         subscription_details_block = page.find '.current-plan', visible: true
 
         expect(subscription_details_block).to(

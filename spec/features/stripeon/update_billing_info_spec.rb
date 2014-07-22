@@ -9,17 +9,17 @@ feature 'Update billing info', %{
 
   background do
     login_as user, scope: :user
-    visit billing_settings_path
+    visit stripeon.billing_settings_path
   end
 
   context "User without subscription" do
     background { User.any_instance.stub subscribed?: false }
 
     scenario "Attempting to update billing info" do
-      visit new_credit_card_path
+      visit stripeon.new_credit_card_path
 
       expect(page).to have_error("You don't have an active subscription")
-      expect(current_path).to eql plans_path
+      expect(current_path).to eql stripeon.plans_path
     end
   end
 
@@ -30,34 +30,34 @@ feature 'Update billing info', %{
     background { User.any_instance.stub subscribed?: true }
 
     context "User with not renewable (canceled) subscription" do
-      given!(:subscription) { create :stripeon_subscription, :canceled, customer: user }
+      let!(:subscription) { create :stripeon_subscription, :canceled, customer: user }
 
       scenario "Viewing billing setting page" do
-        visit billing_settings_path
+        visit stripeon.billing_settings_path
 
         expect(page).not_to have_link "Update Billing Info"
       end
 
       scenario "Attempting to update billing info" do
-        visit new_credit_card_path
+        visit stripeon.new_credit_card_path
 
         expect(page).to have_error(
           "You should have active recurring subscription to perform this action"
         )
-        expect(current_path).to eql billing_settings_path
+        expect(current_path).to eql stripeon.billing_settings_path
       end
     end
 
     context "User with renewable (not canceled) subscription" do
       scenario "Viewing billing setting page" do
-        visit billing_settings_path
+        visit stripeon.billing_settings_path
 
         expect(page).to have_link "Update Billing Info"
       end
 
       describe "Correct page title" do
         background do
-          visit billing_settings_path
+          visit stripeon.billing_settings_path
           click_link 'Update Billing Info'
         end
 
@@ -145,7 +145,7 @@ feature 'Update billing info', %{
 
   private
   def update_billing_info(card_options = {})
-    visit billing_settings_path
+    visit stripeon.billing_settings_path
     click_link 'Update Billing Info'
 
     fill_in_credit_card card_options

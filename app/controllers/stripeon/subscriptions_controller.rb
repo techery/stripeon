@@ -11,7 +11,7 @@ module Stripeon
     end
 
     def new
-      content_for :page_title, I18n.t('page_titles.subscribe_to_plan', plan: @plan.name)
+      content_for :page_title, I18n.t('page_titles.stripeon.subscribe_to_plan', plan: @plan.name)
       @subscription = Subscription.new plan: @plan
     end
 
@@ -107,14 +107,14 @@ module Stripeon
         updated_subscription.save
         current_subscription.upgrade!
 
-        UserMailer.delay.upgrade_subscription_mail(
+        SubscriptionMailer.upgrade_subscription_mail(
           current_user.id,
           updated_subscription.id,
           current_subscription.decorate.upgrade_cost_in_dollars(@plan)
-        )
+        ).deliver
 
         flash[:notice] = I18n.t 'messages.subscription.upgraded', plan: @plan.name
-        redirect_to :billing_settings
+        redirect_to [stripeon, :billing_settings]
       else
         update_on_error "Please try later or contact customer support"
       end
@@ -125,7 +125,7 @@ module Stripeon
 
     def update_on_error(error_message)
       flash[:error] = I18n.t 'errors.subscription.failed_to_update', reason: error_message
-      redirect_to :billing_settings
+      redirect_to [stripeon, :billing_settings]
     end
 
     def create_on_success
@@ -148,7 +148,7 @@ module Stripeon
       if current_user.subscribed?
         flash[:error] = I18n.t('errors.already_subscribed')
 
-        redirect_to :root and return
+        redirect_to [stripeon, :billing_settings] and return
       end
     end
   end

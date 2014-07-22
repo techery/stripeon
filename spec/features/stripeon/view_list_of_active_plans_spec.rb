@@ -15,7 +15,7 @@ feature "View list of active plans", %{
       create :stripeon_plan, name: "Extreme", price: "10000"
       create :stripeon_plan, name: "Premium", price: "7500"
 
-      visit plans_url
+      visit stripeon.plans_url
       @pricing_tables = page.all('ul.pricing-table')
     end
 
@@ -28,7 +28,7 @@ feature "View list of active plans", %{
 
 
     scenario "Viewing list of available plans" do
-      plans = Plan.ascending.decorate
+      plans = Stripeon::Plan.ascending.decorate
 
       @pricing_tables.each_with_index do |table, i|
         expect(table).to have_selector(
@@ -37,7 +37,7 @@ feature "View list of active plans", %{
 
         expect(table).to have_link(
           "Buy now for $#{plans[i].price_in_dollars.to_i}",
-          href: new_subscription_path(plan_id: plans[i].id)
+          href: stripeon.new_subscription_path(plan_id: plans[i].id)
         )
       end
     end
@@ -45,7 +45,7 @@ feature "View list of active plans", %{
 
   describe "When user not logged in" do
     scenario "It redirects to login page" do
-      visit plans_url
+      visit stripeon.plans_url
 
       expect(current_path).to eql new_user_session_path
     end

@@ -56,28 +56,28 @@ module Stripeon
     def require_active_subscription!
       unless current_user.subscribed?
         flash[:error] = I18n.t 'errors.no_active_subscription'
-        redirect_to :plans
+        redirect_to [stripeon, :plans]
       end
     end
 
     def require_cancelable_subscription!
       unless current_user.subscription.can_cancel?
         flash[:error] = I18n.t 'errors.subscription.already_canceled'
-        redirect_to :billing_settings
+        redirect_to [stripeon, :billing_settings]
       end
     end
 
     def require_upgradable_subscription!
       unless current_user.subscription.can_upgrade?
         flash[:error] = I18n.t 'errors.subscription.is_not_upgradeable'
-        redirect_to :billing_settings
+        redirect_to [stripeon, :billing_settings]
       end
     end
 
     def require_renewable_subscription!
       unless current_user.subscription.active?
         flash[:error] = I18n.t 'errors.subscription.renewable_required'
-        redirect_to :billing_settings
+        redirect_to [stripeon, :billing_settings]
       end
     end
 
@@ -85,7 +85,7 @@ module Stripeon
       @plan = Plan.active.find(plan_id).decorate
     rescue ActiveRecord::RecordNotFound
       flash[:error] = I18n.t('activerecord.errors.plan_not_found')
-      redirect_to :root
+      redirect_to [stripeon, :plans]
     end
   end
 end

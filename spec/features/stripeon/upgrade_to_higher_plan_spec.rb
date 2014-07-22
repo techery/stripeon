@@ -4,7 +4,7 @@ shared_examples "Handling bad subscription upgrade requests" do
   context "When subscription is canceled" do
     given!(:subscription) { create :stripeon_subscription, :canceled, customer: user, plan: current_plan }
 
-    it { should be_on_path billing_settings_path }
+    it { should be_on_path stripeon.billing_settings_path }
     it { should have_error "We are sorry but your current subscription is not upgradeable" }
   end
 
@@ -30,7 +30,7 @@ feature "Upgrade to higher plan", %{
 } do
   subject { page }
 
-  given(:user) { FactoryGirl.create :user }
+  given(:user) { create :user }
 
   given!(:current_plan)   { create :stripeon_plan, name: "Economy", price: "2500" }
   given!(:requested_plan) { create :stripeon_plan, name: "Premium", price: "5000" }
@@ -46,8 +46,8 @@ feature "Upgrade to higher plan", %{
       given(:current_time) { Time.parse "18:00:00 20 April, 2012" } # happy b-day
 
       given!(:subscription) {
-        create :subscription,
-               stripeon_: user,
+        create :stripeon_subscription,
+               customer: user,
                plan: current_plan,
                current_period_start_at: period_start
       }
@@ -55,7 +55,7 @@ feature "Upgrade to higher plan", %{
       background { Time.stub now: current_time }
 
       scenario "Requesting upgrade confirmation" do
-        visit billing_settings_path
+        visit stripeon.billing_settings_path
         click_link "Upgrade"
 
         expect(page).to have_title "Upgrade to Premium plan"
@@ -71,7 +71,7 @@ feature "Upgrade to higher plan", %{
     end
 
     it_has_behavior_of "Handling bad subscription upgrade requests" do
-      background { visit upgrade_subscription_path plan_id: requested_plan_id }
+      background { visit stripeon.upgrade_subscription_path plan_id: requested_plan_id }
     end
   end
 
@@ -92,12 +92,12 @@ feature "Upgrade to higher plan", %{
         previous_subscription = subscription
 
         expect {
-          visit billing_settings_path
+          visit stripeon.billing_settings_path
           click_link "Upgrade"
           click_button "Change my plan"
         }.to change(user.subscriptions, :count).by(1)
 
-        expect(current_path).to eql billing_settings_path
+        expect(current_path).to eql stripeon.billing_settings_path
         expect(page).to have_notice(
           "Your subscription has been successfuly upgraded to plan Premium"
         )
@@ -113,13 +113,12 @@ feature "Upgrade to higher plan", %{
 
       scenario "Sending confirmation email" do
         expect {
-          visit billing_settings_path
+          visit stripeon.billing_settings_path
           click_link "Upgrade"
           click_button "Change my plan"
-        }.to change(Sidekiq::Extensions::DelayedMailer.jobs, :size).by(1)
+        }.to change(ActionMailer::Base.deliveries, :count).by(1)
 
-        expect(Sidekiq::Extensions::DelayedMailer.jobs.last["args"][0]).to include "UserMailer"
-        expect(Sidekiq::Extensions::DelayedMailer.jobs.last["args"][0]).to include "upgrade_subscription_mail"
+        expect(ActionMailer::Base.deliveries.last.subject).to eql "Stripeon: Subscription Upgraded"
       end
     end
 
@@ -131,7 +130,7 @@ feature "Upgrade to higher plan", %{
   private
   def upgrade_subscription
     page.driver.submit :put,
-                       subscription_path,
+                       stripeon.subscription_path,
                        { subscription: { new_plan_id: requested_plan_id } }
   end
 end
