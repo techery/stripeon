@@ -1,7 +1,6 @@
 class User < ActiveRecord::Base
   include ::Stripeon::Customer
 
-  def email
-    'to@example.com'
-  end
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :trackable, :validatable
 end

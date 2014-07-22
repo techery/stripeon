@@ -1,0 +1,20 @@
+div
+  h2 Payments history
+  table.payments
+    thead
+      tr
+        td Date
+        td Card
+        td Amount
+        td Status
+        td Payment
+    tbody
+      - @transactions.each do |transaction|
+        tr
+          td = transaction.created_at.strftime("%B %d, %Y")
+          td = "#{transaction.credit_card.type} - #{transaction.credit_card.last4}"
+          td = number_to_currency transaction.amount_in_dollars, precision: 0
+          td = transaction.status_humanized
+          td
+            - if transaction.successful?
+              = link_to "Download Receipt", payment_path(transaction.id, format: :pdf), target: "_blank"

@@ -1,0 +1,43 @@
+div
+  .billing-info
+    h2 Billing information
+    div
+      p
+        - if @subscription.active?
+          ' Your credit card will automatically be charged
+          b
+            ' #{number_to_currency @current_plan.price_in_dollars, precision: 0}
+        - else
+          ' Your subscription will automatically expire
+        ' on
+        b = @subscription.current_period_end_at.strftime("%B %d, %Y")
+      - unless @credit_card.nil?
+        .clearfix
+          .left
+            b = "#{@credit_card.type} xxxx xxxx xxxx #{@credit_card.last4}"
+            br
+            ' Expiration:
+            b = "#{@credit_card.exp_month}/#{@credit_card.exp_year}"
+          - if @subscription.active?
+            = link_to t('credit_card.new'), new_credit_card_path, class: "button small right"
+
+  div
+    h2 Available plans
+    table.billing-plans
+      thead
+        tr
+          th = t('plan.plan')
+          th = t('plan.price')
+          th
+      tbody
+        - Stripeon::Plan.active.descending.decorate.each do |plan|
+          tr
+            td = plan.name
+            td = number_to_currency plan.price_in_dollars, precision: 0
+            td
+              - if plan == @current_plan
+                = t('plan.current')
+              - elsif @subscription.can_upgrade? && @current_plan.upgradable_to?(plan)
+                = link_to 'Upgrade', upgrade_subscription_path(plan_id: plan.id), class: "button small"
+    - if @subscription.active?
+      = link_to t('subscription.cancel'), cancel_subscription_path, class: "button small"

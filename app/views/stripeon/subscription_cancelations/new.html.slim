@@ -1,0 +1,11 @@
+div
+  h2 Cancel Subscription
+  div
+    p
+      ' Your current subscription will be active till
+      b
+        ' #{@subscription.current_period_end_at.strftime("%B %d, %Y")}
+    p This action can not be undone
+
+  div
+    = link_to "Cancel my subscription", stripeon.subscription_path, method: :delete, class: "button red"

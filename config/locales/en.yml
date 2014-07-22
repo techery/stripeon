@@ -1,6 +1,33 @@
 #TODO: Move all to namespace 'stripeon'
 en:
+  messages:
+    credit_card:
+      has_been_updated: "Your credit card information has been updated"
+    subscription:
+      created: "Thank you for your subscription!"
+      canceled: "Your subscription has been successfully canceled"
+      upgraded: "Your subscription has been successfuly upgraded to plan %{plan}"
+
+  subscription:
+    cancel: "Cancel Subscription"
+
   errors:
+    access_denied: "You are not authorized to perform this action."
+    subscription:
+      failed_to_cancel: "Failed to cancel subscription. Please try later"
+      already_canceled: "Your subscription is already canceled"
+      renewable_required: "You should have active recurring subscription to perform this action"
+      is_not_upgradeable: >
+        We are sorry but your current subscription is not upgradeable.
+        Please contact us if you have any questions
+      is_not_upgradeable_to_plan: >
+        We are sorry but your current subscription can not be upgraded to requested plan "%{plan}".
+        Please contact us if you have any questions"
+      failed_to_update: 'Failed to update subscription: "%{reason}"'
+    credit_card:
+      failed_to_update: "Failed to update credit card information. Please try later."
+    already_subscribed: 'You already have an active subscription'
+    no_active_subscription: "You don't have an active subscription"
     models:
       plan:
         stripe:
@@ -14,3 +41,17 @@ en:
         subject: "Stripeon: Subscription Upgraded"
       expire_subscription_mail:
         subject: "Stripeon: Subscription Expired"
+
+  page_titles:
+    stripeon:
+      registrations: "Join Now"
+      sessions: "Sign in"
+      passwords: "Forgot your password?"
+      billing_settings: "Plans and Billing"
+      credit_cards: "Update billing information"
+      passwords: "Update your Password"
+      payments: "Payment History"
+      profiles: "Your Profile"
+      cancel_subscription: "Cancel your %{plan} subscription"
+      subscribe_to_plan: "Subscribe to %{plan} plan"
+      upgrade_to_plan: "Upgrade to %{plan} plan"

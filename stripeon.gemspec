@@ -25,5 +25,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'factory_girl_rails', '~> 4.3.0'
   s.add_development_dependency 'shoulda-matchers',   '~> 2.6.1'
   s.add_development_dependency 'capybara',           '~> 2.2.1'
+  s.add_development_dependency 'capybara-webkit',    '~> 1.1.0'
   s.add_development_dependency 'ffaker',             '~> 1.23.0'
 end

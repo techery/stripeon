@@ -1,0 +1,7 @@
+- plans.each do |bp|
+  div class="#{'end' if bp == plans.last}"
+    ul.pricing-table
+      li.title = "#{bp.name}"
+      li.cta-button
+        = link_to new_subscription_path(plan_id: bp.id), class: "button" do
+          = I18n.t('plan.buy_now_for', price: (number_to_currency bp.price_in_dollars, precision: 0))

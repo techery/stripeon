@@ -14,3 +14,10 @@ gem 'pry'
 gem 'pry-debugger'
 
 gem 'slim'
+gem 'devise'
+gem 'flutie'
+
+group :test do
+  gem 'database_cleaner', '~> 1.2.0'
+  gem 'capybara-screenshot'
+end

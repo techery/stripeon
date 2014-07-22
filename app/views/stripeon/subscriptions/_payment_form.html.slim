@@ -1,0 +1,6 @@
+= form_for subscription, data: { 'stripe-form' => 'subscription' } do |f|
+
+  = f.hidden_field :plan_id
+  = render partial: 'credit_cards/form_fields'
+
+  = f.button "Subscribe Now for #{number_to_currency subscription.plan.price_in_dollars, precision: 0}", class: 'wide'
