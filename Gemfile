@@ -5,6 +5,9 @@ gem 'state_machine-audit_trail'
 
 gem 'draper', '~> 1.3'
 
+gem 'pg'
+gem 'prawn', '~> 0.14.0'
+
 gemspec
 
 gem 'dci', github: 'techery/dci'
