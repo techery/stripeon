@@ -96,7 +96,7 @@ feature 'Update billing info', %{
               update_billing_info
 
               expect(page).to have_error "Failed to update credit card information. Please try later."
-              expect(current_path).to eql billing_settings_path
+              expect(current_path).to eql stripeon.billing_settings_path
             }.not_to change(user.credit_cards, :count)
           end
         end

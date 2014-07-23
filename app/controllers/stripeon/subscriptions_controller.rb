@@ -67,15 +67,13 @@ module Stripeon
       # / Create subscription
 
       # Notifications(by email)
-      UserMailer.delay.create_subscription_mail current_user.id, subscription.id
+      SubscriptionMailer.create_subscription_mail(current_user.id, subscription.id).deliver
       # / Notifications(by email)
 
       create_on_success
     rescue Stripe::CardError => e
       Rails.logger.error e.inspect
       create_on_decline e.message
-    rescue Redis::CannotConnectError
-      create_on_success
     rescue => e
       Rails.logger.error e.inspect
       create_on_error e.message

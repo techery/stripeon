@@ -5,6 +5,8 @@ gem 'state_machine-audit_trail'
 
 gem 'draper', '~> 1.3'
 
+gem 'coffee-rails',     '~> 4.0.1'
+
 gem 'pg'
 gem 'prawn', '~> 0.14.0'
 
