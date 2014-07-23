@@ -17,8 +17,13 @@ Gem::Specification.new do |s|
   s.files = Dir['{app,config,db,lib}/**/*', 'MIT-LICENSE', 'Rakefile', 'README.rdoc']
   s.test_files = Dir['spec/**/*']
 
-  s.add_dependency 'rails',  '~> 4.1.4'
-  s.add_dependency 'stripe', '~> 1.10.1'
+  s.add_dependency 'rails',                     '~> 4.1.4'
+  s.add_dependency 'stripe',                    '~> 1.10.1'
+  s.add_dependency 'state_machine',             '~> 1.2.0'
+  s.add_dependency 'state_machine-audit_trail', '~> 0.1.8'
+  s.add_dependency 'prawn',                     '~> 0.14.0'
+  s.add_dependency 'draper',                    '~> 1.3'
+
 
   s.add_development_dependency 'sqlite3'
   s.add_development_dependency 'rspec-rails',        '~> 3.0.1'
