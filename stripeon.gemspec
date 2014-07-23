@@ -23,6 +23,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'state_machine-audit_trail', '~> 0.1.8'
   s.add_dependency 'prawn',                     '~> 0.14.0'
   s.add_dependency 'draper',                    '~> 1.3'
+  s.add_dependency 'sidekiq',                   '~> 2.17.4'
 
 
   s.add_development_dependency 'sqlite3'

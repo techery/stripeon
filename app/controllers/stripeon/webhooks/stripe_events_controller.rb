@@ -9,7 +9,7 @@ module Stripeon
       payload    = request.body.read
       event_json = JSON.parse payload
 
-      event = StripeEvent.create(
+      event = Event.create(
         id_on_stripe: event_json['id'],
         type:         event_json['type'],
         ip_address:   request.remote_ip,
