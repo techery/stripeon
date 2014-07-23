@@ -25,7 +25,7 @@ feature 'Pay for order', %{
           expect(page).to have_notice "Thank you for your subscription!"
         }.to change(ActionMailer::Base.deliveries, :count).by(1)
 
-        expect(ActionMailer::Base.deliveries.last).to eql 'Stripeon: Subscription Confirmation'
+        expect(ActionMailer::Base.deliveries.last.subject).to eql 'Stripeon: Subscription Confirmation'
 
       end
     end
