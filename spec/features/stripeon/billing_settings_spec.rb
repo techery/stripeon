@@ -9,7 +9,7 @@ feature "Billing settings", %{
   given(:user) { create :user }
 
   context "Access billing settings as logged in user" do
-    background { login_as user, scope: :user }
+    background { login_as_customer user }
 
     context 'With active subscription' do
       given(:user)          { create :user }
@@ -74,12 +74,5 @@ feature "Billing settings", %{
       expect(page).to have_error "You don't have an active subscription"
       expect(current_path).to eql stripeon.plans_path
     end
-  end
-
-  scenario "Attempting to access billing settings as guest" do
-    visit stripeon.billing_settings_path
-
-    expect(current_path).to eql new_user_session_path
-    expect(page).to have_error "You need to sign in or sign up before continuing"
   end
 end

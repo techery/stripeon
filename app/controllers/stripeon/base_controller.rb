@@ -4,10 +4,9 @@ module Stripeon
     # For APIs, you may want to use :null_session instead.
     protect_from_forgery with: :exception
 
-    before_filter :authenticate_user!
-
-    before_filter :configure_permitted_parameters, if: :devise_controller?
     before_filter :set_page_title
+
+    helper_method :current_customer
 
     def view_context
       super.tap do |view|
@@ -19,12 +18,12 @@ module Stripeon
 
     private
 
-    def json_errors_for(resource)
-      { errors: resource.errors.messages }
+    def current_customer
+      Stripeon.config.current_customer.call
     end
 
-    def configure_permitted_parameters
-      devise_parameter_sanitizer.for(:sign_up) << %i[first_name last_name]
+    def json_errors_for(resource)
+      { errors: resource.errors.messages }
     end
 
     def content_for(name, content)
@@ -54,28 +53,28 @@ module Stripeon
     end
 
     def require_active_subscription!
-      unless current_user.subscribed?
+      unless current_customer.subscribed?
         flash[:error] = I18n.t 'errors.no_active_subscription'
         redirect_to [stripeon, :plans]
       end
     end
 
     def require_cancelable_subscription!
-      unless current_user.subscription.can_cancel?
+      unless current_customer.subscription.can_cancel?
         flash[:error] = I18n.t 'errors.subscription.already_canceled'
         redirect_to [stripeon, :billing_settings]
       end
     end
 
     def require_upgradable_subscription!
-      unless current_user.subscription.can_upgrade?
+      unless current_customer.subscription.can_upgrade?
         flash[:error] = I18n.t 'errors.subscription.is_not_upgradeable'
         redirect_to [stripeon, :billing_settings]
       end
     end
 
     def require_renewable_subscription!
-      unless current_user.subscription.active?
+      unless current_customer.subscription.active?
         flash[:error] = I18n.t 'errors.subscription.renewable_required'
         redirect_to [stripeon, :billing_settings]
       end

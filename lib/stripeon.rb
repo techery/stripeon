@@ -6,4 +6,7 @@ require 'stripeon/pdf_receipt'
 require 'stripeon/defaults'
 
 module Stripeon
+  def self.config
+    Configurator
+  end
 end

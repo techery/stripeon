@@ -8,7 +8,7 @@ feature 'Update billing info', %{
   given(:user) { create :user }
 
   background do
-    login_as user, scope: :user
+    login_as_customer user
     visit stripeon.billing_settings_path
   end
 

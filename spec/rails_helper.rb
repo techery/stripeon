@@ -23,12 +23,8 @@ RSpec.configure do |config|
   config.use_transactional_fixtures =  false
   config.infer_spec_type_from_file_location!
 
-  config.include Warden::Test::Helpers, type: :feature
-
   config.before(:suite) do
     DatabaseCleaner.clean_with(:truncation)
-
-    Warden.test_mode!
   end
 
   config.before(:each) do
@@ -47,6 +43,5 @@ RSpec.configure do |config|
 
   config.after(:each) do
     DatabaseCleaner.clean
-    Warden.test_reset!
   end
 end

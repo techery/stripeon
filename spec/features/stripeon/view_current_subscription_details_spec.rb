@@ -23,7 +23,7 @@ feature "View current subscription details", %{
     ].each do |user_type|
       given(:user) { send user_type }
 
-      background { login_as user, scope: :user }
+      background { login_as_customer user }
 
       scenario "Viewing current subscription plan details by #{user_type.to_s.humanize.downcase}" do
         visit stripeon.billing_settings_path

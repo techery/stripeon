@@ -2,7 +2,7 @@ module Stripeon
   class CreditCard < ActiveRecord::Base
     self.inheritance_column = nil
 
-    belongs_to :customer, class_name: 'User'
+    belongs_to :customer, class_name: Stripeon.config.customer_model
     has_many :transactions
 
     validates :id_on_stripe, presence: true

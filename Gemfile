@@ -20,7 +20,6 @@ gem 'pry'
 gem 'pry-debugger'
 
 gem 'slim'
-gem 'devise'
 gem 'flutie'
 
 group :test do

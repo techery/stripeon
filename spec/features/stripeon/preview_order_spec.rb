@@ -11,7 +11,7 @@ feature 'Preview order', %{
 
   context "When have no active subscription" do
     background do
-      login_as user, scope: :user
+      login_as_customer user
     end
 
     scenario "Previewing order" do
@@ -36,7 +36,7 @@ feature 'Preview order', %{
 
   context "When have active subscription" do
     scenario "Redirecting to billing settings page with error" do
-      login_as user_with_active_subscription, scope: :user
+      login_as_customer user_with_active_subscription
       visit stripeon.new_subscription_path(plan_id: plan.id)
 
       expect(current_path).to eql stripeon.billing_settings_path

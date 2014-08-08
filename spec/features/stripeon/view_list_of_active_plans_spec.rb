@@ -9,7 +9,7 @@ feature "View list of active plans", %{
     given(:user) { create :user }
 
     background do
-      login_as(user, scope: :user)
+      login_as_customer user
       create :stripeon_plan, name: "Economy", price: "2500"
       create :stripeon_plan, name: "Plus",    price: "5000"
       create :stripeon_plan, name: "Extreme", price: "10000"
@@ -40,14 +40,6 @@ feature "View list of active plans", %{
           href: stripeon.new_subscription_path(plan_id: plans[i].id)
         )
       end
-    end
-  end
-
-  describe "When user not logged in" do
-    scenario "It redirects to login page" do
-      visit stripeon.plans_url
-
-      expect(current_path).to eql new_user_session_path
     end
   end
 end

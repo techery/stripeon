@@ -4,20 +4,20 @@ module Stripeon
     before_filter :require_renewable_subscription!
 
     def new
-      @credit_card = current_user.credit_cards.new
+      @credit_card = current_customer.credit_cards.new
     end
 
     def create
-      create_on_error and return if current_user.on_stripe.nil?
+      create_on_error and return if current_customer.on_stripe.nil?
 
       # TODO: cover with acceptance test
-      customer = current_user.on_stripe
+      customer = current_customer.on_stripe
       card = customer.cards.create card: params[:credit_card][:card_token]
 
       customer.default_card = card.id
       customer.save
 
-      current_user.credit_cards.create(
+      current_customer.credit_cards.create(
         id_on_stripe: card.id,
         last4:        card.last4,
         exp_month:    card.exp_month,

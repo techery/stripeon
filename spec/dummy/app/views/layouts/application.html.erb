@@ -13,7 +13,7 @@
 <body class="<%= body_class.dasherize %>">
 <div id="container">
   <%= render 'layouts/stripeon/messages'%>
-  <%= render 'layouts/application/subheader' if user_signed_in? %>
+  <%= render 'layouts/application/subheader' if current_customer.present? %>
   <%= yield %>
 </div>
 

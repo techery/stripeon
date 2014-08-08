@@ -9,7 +9,7 @@ feature "Transaction receipt", %{
   given!(:other_user) { create :user, :with_payment_history }
 
   background do
-    login_as user, scope: :user
+    login_as_customer user
     visit stripeon.payments_path
     @payments_table = page.find('table.payments')
   end

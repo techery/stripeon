@@ -3,10 +3,10 @@
     = render partial: "layouts/application/current_subscription"
 
   div
-    h1.greeting = "Hello, #{current_user.email}!"
+    h1.greeting = "Hello, #{current_customer.email}!"
     nav
       li.billing
-        - unless current_user.subscribed?
+        - unless current_customer.subscribed?
           = link_to "Billing", [stripeon, :plans]
         - else
           = link_to "Billing", [stripeon, :billing_settings]

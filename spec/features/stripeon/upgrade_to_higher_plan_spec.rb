@@ -38,7 +38,7 @@ feature "Upgrade to higher plan", %{
 
   given(:requested_plan_id) { requested_plan.id }
 
-  background { login_as user, scope: :user }
+  background { login_as_customer user }
 
   describe "Request upgrade confirmation" do
     context "When subscription can be upgraded" do

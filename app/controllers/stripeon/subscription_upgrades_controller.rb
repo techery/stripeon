@@ -4,7 +4,7 @@ module Stripeon
     before_filter :require_upgradable_subscription!
 
     def new
-      @subscription = current_user.subscription
+      @subscription = current_customer.subscription
       @current_plan = @subscription.plan.decorate
       @new_plan = @plan
 
