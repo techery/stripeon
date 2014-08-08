@@ -224,19 +224,15 @@ DEPENDENCIES
   capybara-webkit (~> 1.1.0)
   database_cleaner (~> 1.2.0)
   dci!
-  draper (~> 1.3)
   factory_girl_rails (~> 4.3.0)
   ffaker (~> 1.23.0)
   flutie
   jquery-rails (~> 3.0.4)
   pg
-  prawn (~> 0.14.0)
   pry
   pry-debugger
   rspec-rails (~> 3.0.1)
   shoulda-matchers (~> 2.6.1)
   slim
   sqlite3
-  state_machine
-  state_machine-audit_trail
   stripeon!

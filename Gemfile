@@ -2,14 +2,7 @@ source 'https://rubygems.org'
 
 gem 'pg'
 
-gem 'state_machine'
-gem 'state_machine-audit_trail'
-
-gem 'draper', '~> 1.3'
-
 gem 'jquery-rails', '~> 3.0.4'
-
-gem 'prawn', '~> 0.14.0'
 
 gemspec
 
