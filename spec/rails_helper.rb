@@ -17,11 +17,16 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 ActiveRecord::Migration.maintain_test_schema!
 
 Capybara.javascript_driver = :webkit
-Capybara.default_wait_time = 10
+
+Capybara.default_wait_time = 30
 
 RSpec.configure do |config|
   config.use_transactional_fixtures =  false
   config.infer_spec_type_from_file_location!
+
+  config.before(:suite) do
+    DatabaseCleaner.clean_with(:truncation)
+  config.include Warden::Test::Helpers, type: :feature
 
   config.before(:suite) do
     DatabaseCleaner.clean_with(:truncation)

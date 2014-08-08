@@ -10,9 +10,7 @@ feature 'Preview order', %{
   given!(:plan) { create :stripeon_plan, name: "Economy", price: "2500" }
 
   context "When have no active subscription" do
-    background do
-      login_as_customer user
-    end
+    background { login_as_customer user }
 
     scenario "Previewing order" do
       visit stripeon.plans_url
