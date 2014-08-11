@@ -11,7 +11,7 @@ feature 'Cancel subscription', %{
 
   given(:user) { subscription.customer }
 
-  background { login_as user, scope: :user }
+  background { login_as_customer user }
 
   context "When user is paid" do
     context "With active subscription" do
@@ -47,7 +47,7 @@ feature 'Cancel subscription', %{
 
       describe "Cancelation fails" do
         context "When user does not have active subscription" do
-          given!(:user) { create :user }
+          given(:user) { create :user }
 
           scenario "See error message" do
             cancel_subscription

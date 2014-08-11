@@ -1,4 +1,4 @@
-- if current_user.subscribed?
+- if current_customer.subscribed?
   = link_to [stripeon, :billing_settings] do
     p = I18n.t('plan.current')
-    p.plan = "#{current_user.subscription.plan.name}"
+    p.plan = "#{current_customer.subscription.plan.name}"

@@ -7,6 +7,10 @@ require 'sidekiq'
 require 'stripeon/engine'
 require 'stripeon/pdf_receipt'
 require 'stripeon/defaults'
+require 'stripeon/configurator'
 
 module Stripeon
+  def self.config
+    Configurator
+  end
 end

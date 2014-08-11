@@ -2,7 +2,7 @@ module Stripeon
   class Subscription < ActiveRecord::Base
     attr_accessor :event_source
 
-    belongs_to :customer, class_name: 'User'
+    belongs_to :customer, class_name: Stripeon.config.customer_model
     belongs_to :plan, counter_cache: true
     has_many   :invoices
     has_many   :subscription_status_transitions

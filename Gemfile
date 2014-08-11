@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
+
 gem 'pg'
 
 gem 'jquery-rails', '~> 3.0.4'
@@ -12,7 +13,7 @@ gem 'pry'
 gem 'pry-debugger'
 
 gem 'slim'
-gem 'devise'
+
 gem 'flutie'
 
 group :test do

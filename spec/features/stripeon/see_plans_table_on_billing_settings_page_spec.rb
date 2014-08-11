@@ -21,7 +21,7 @@ feature "See plans table on billing setting page", %{
   let(:rows) { plans_table.find("tbody").all('tr') }
 
   background do
-    login_as user, scope: :user
+    login_as_customer user
 
     visit stripeon.billing_settings_path
   end

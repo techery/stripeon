@@ -1,7 +1,6 @@
 FactoryGirl.define do
   factory :user do
     email    { Faker::Internet.email }
-    password { "Password@123" }
 
     trait :on_stripe do
       before(:create) do |user|

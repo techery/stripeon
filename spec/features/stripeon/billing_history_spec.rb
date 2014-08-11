@@ -5,10 +5,10 @@ feature "Billing history", %{
   I can view my billing history
 } do
 
-  given(:customer) {create :user, :with_payment_history }
+  given(:customer) { create :user, :with_payment_history }
 
   background do
-    login_as customer, scope: :user
+    login_as_customer customer
     visit stripeon.payments_path
     @payments_table = page.find('table.payments')
   end

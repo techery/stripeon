@@ -16,7 +16,7 @@ module Stripeon
     end
 
     def destroy
-      subscription = current_user.subscription
+      subscription = current_customer.subscription
 
       if subscription.cancel
         flash[:notice] = I18n.t('messages.subscription.canceled')
@@ -29,16 +29,16 @@ module Stripeon
 
     def create
       # Register customer & card on Stripe
-      if current_user.on_stripe.nil?
+      if current_customer.on_stripe.nil?
         customer = Stripe::Customer.create(
-          email: current_user.email,
+          email: current_customer.email,
           card:  params[:subscription][:card_token]
         )
-        current_user.update id_on_stripe: customer.id
+        current_customer.update id_on_stripe: customer.id
         card = customer.cards.first
       else
         # TODO: cover with acceptance test
-        customer = current_user.on_stripe
+        customer = current_customer.on_stripe
         card = customer.cards.create card: params[:subscription][:card_token]
 
         # Change Default card to newly added one
@@ -46,7 +46,7 @@ module Stripeon
         customer.save
       end
 
-      credit_card = current_user.credit_cards.create(
+      credit_card = current_customer.credit_cards.create(
         id_on_stripe: card.id,
         last4:        card.last4,
         exp_month:    card.exp_month,
@@ -58,7 +58,7 @@ module Stripeon
       # Create subscription
       stripe_subscription = customer.subscriptions.create plan: @plan.id_on_stripe
 
-      subscription = current_user.subscriptions.create(
+      subscription = current_customer.subscriptions.create(
         id_on_stripe:            stripe_subscription.id,
         plan:                    @plan,
         current_period_end_at:   Time.at(stripe_subscription.current_period_end),
@@ -67,7 +67,7 @@ module Stripeon
       # / Create subscription
 
       # Notifications(by email)
-      SubscriptionMailer.create_subscription_mail(current_user.id, subscription.id).deliver
+      SubscriptionMailer.create_subscription_mail(current_customer.id, subscription.id).deliver
       # / Notifications(by email)
 
       create_on_success
@@ -80,7 +80,7 @@ module Stripeon
     end
 
     def update
-      current_subscription = current_user.subscription
+      current_subscription = current_customer.subscription
       updated_subscription = current_subscription.dup
 
       unless current_subscription.plan.upgradable_to? @plan
@@ -88,7 +88,7 @@ module Stripeon
         redirect_to :billing_settings and return
       end
 
-      customer = current_user.on_stripe
+      customer = current_customer.on_stripe
       subscription = customer.subscriptions.retrieve current_subscription.id_on_stripe
 
       subscription.plan = @plan.id_on_stripe
@@ -97,7 +97,7 @@ module Stripeon
 
       sleep 2 # for glory, ale and kittens!
 
-      invoice = Stripe::Invoice.create customer: current_user.id_on_stripe
+      invoice = Stripe::Invoice.create customer: current_customer.id_on_stripe
       invoice.pay
 
       if invoice.paid
@@ -106,7 +106,7 @@ module Stripeon
         current_subscription.upgrade!
 
         SubscriptionMailer.upgrade_subscription_mail(
-          current_user.id,
+          current_customer.id,
           updated_subscription.id,
           current_subscription.decorate.upgrade_cost_in_dollars(@plan)
         ).deliver
@@ -143,7 +143,7 @@ module Stripeon
     private
 
     def prevent_duplicate_subscription!
-      if current_user.subscribed?
+      if current_customer.subscribed?
         flash[:error] = I18n.t('errors.already_subscribed')
 
         redirect_to [stripeon, :billing_settings] and return

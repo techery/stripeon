@@ -10,9 +10,7 @@ feature 'Preview order', %{
   given!(:plan) { create :stripeon_plan, name: "Economy", price: "2500" }
 
   context "When have no active subscription" do
-    background do
-      login_as user, scope: :user
-    end
+    background { login_as_customer user }
 
     scenario "Previewing order" do
       visit stripeon.plans_url
@@ -36,7 +34,7 @@ feature 'Preview order', %{
 
   context "When have active subscription" do
     scenario "Redirecting to billing settings page with error" do
-      login_as user_with_active_subscription, scope: :user
+      login_as_customer user_with_active_subscription
       visit stripeon.new_subscription_path(plan_id: plan.id)
 
       expect(current_path).to eql stripeon.billing_settings_path

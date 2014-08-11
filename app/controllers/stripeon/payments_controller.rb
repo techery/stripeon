@@ -1,11 +1,11 @@
 module Stripeon
   class PaymentsController < BaseController
     def index
-      @transactions = current_user.transactions.order(created_at: :desc).decorate
+      @transactions = current_customer.transactions.order(created_at: :desc).decorate
     end
 
     def show
-      @transaction = current_user.transactions.where(successful: true).find params[:id]
+      @transaction = current_customer.transactions.where(successful: true).find params[:id]
 
       respond_to do |format|
         format.pdf do

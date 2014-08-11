@@ -10,7 +10,7 @@ feature 'Pay for order', %{
   given!(:plan) { create :stripeon_plan, :with_stripe_call, price: 2500 }
 
   background do
-    login_as user, scope: :user, run_callbacks: false
+    login_as_customer user
     visit stripeon.new_subscription_path(plan_id: plan.id)
   end
 
